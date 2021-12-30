@@ -22,13 +22,11 @@ mongoose
   .connect(MongoDb, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
   })
   .then(() => {
     console.log("db success connect");
   })
   .catch((error) => {
     console.log("error connecting to database: ");
-    console.log(err);
+    console.log(error.message);
   });

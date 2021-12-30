@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 const miTablaSchema = new mongoose.Schema({
-  name: {
+  mueble: {
     type: String,
     required: true,
     unique: true,
@@ -15,7 +15,7 @@ const miTablaSchema = new mongoose.Schema({
   },
 });
 
-miTablaSchema.index({ name: "name" });
+miTablaSchema.index({ name: "mueble" });
 miTablaSchema.plugin(uniqueValidator);
 
 export default mongoose.model("MiTabla", miTablaSchema);
