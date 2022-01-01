@@ -1,14 +1,16 @@
 import { ApolloServer } from "apollo-server-micro";
 import { typeDefs } from "./schemas";
 import { resolvers } from "./resolvers";
-import "db/db.js";
+import "db/config";
+
+import "db/config/index.js";
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
 const startServer = apolloServer.start();
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Credentials", "false");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Origin",
     "https://studio.apollographql.com"

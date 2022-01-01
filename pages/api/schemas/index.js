@@ -6,16 +6,24 @@ export const typeDefs = gql`
     anchura: Int
     unidad: String
   }
-  type Mitabla {
+  type Product {
     _id: ID
     mueble: String!
     material: String
     medidas: Medidas
   }
+  input ProductInput {
+    mueble: String!
+    material: String!
+  }
 
   type Query {
-    getAll: [Mitabla]
-    getMuebles(mueble: String!): [Mitabla]
-    getSingleMueble(mueble: String!): Mitabla
+    getAll: [Product]
+    getMuebles(mueble: String!): [Product]
+    getSingleMueble(mueble: String!): Product
+  }
+
+  type Mutation {
+    newProduct(mueble: String!, material: String): Product
   }
 `;
