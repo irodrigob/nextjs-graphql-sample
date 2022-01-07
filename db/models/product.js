@@ -13,18 +13,15 @@ const ProductSchema = new mongoose.Schema({
     type: String,
   },
   medidas: {
-    type: String,
+    altura: Number,
+    anchura: Number,
+    unidad: String,
   },
 });
 
 ProductSchema.index({ name: "mueble" });
 ProductSchema.plugin(uniqueValidator);
 
-let Product;
-/*try {
-  Product = mongoose.model("Product", ProductSchema);
-} catch (error) {
-  Product = mongoose.model.Product;
-}*/
-Product = mongoose.model("Product", ProductSchema);
+let Product =
+  mongoose.models.Product || mongoose.model("Product", ProductSchema);
 export default Product;

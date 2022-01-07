@@ -3,8 +3,6 @@ import { typeDefs } from "./schemas";
 import { resolvers } from "./resolvers";
 import "db/config";
 
-import "db/config/index.js";
-
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
 const startServer = apolloServer.start();

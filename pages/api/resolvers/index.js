@@ -12,5 +12,9 @@ export const resolvers = {
       const row = new Product({ ...args });
       return row.save();
     },
+    newCompleteProduct: (root, args) => {
+      const row = new Product({ ...args.input });
+      return row.save();
+    },
   },
 };

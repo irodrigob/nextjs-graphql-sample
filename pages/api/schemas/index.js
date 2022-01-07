@@ -12,11 +12,16 @@ export const typeDefs = gql`
     material: String
     medidas: Medidas
   }
-  input ProductInput {
-    mueble: String!
-    material: String!
+  input InputMedidas {
+    altura: Int
+    anchura: Int
+    unidad: String
   }
-
+  input InputProduct {
+    mueble: String!
+    material: String
+    medidas: InputMedidas
+  }
   type Query {
     getAll: [Product]
     getMuebles(mueble: String!): [Product]
@@ -25,5 +30,6 @@ export const typeDefs = gql`
 
   type Mutation {
     newProduct(mueble: String!, material: String): Product
+    newCompleteProduct(input: InputProduct): Product
   }
 `;
