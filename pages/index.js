@@ -13,7 +13,15 @@ const QUERY = gql`
   }
 `;
 export default function Home() {
-  const { data, loading, error } = useQuery(QUERY);
+  const { data, loading, error } = useQuery(gql`
+    query Query {
+      getAll {
+        _id
+        mueble
+        material
+      }
+    }
+  `);
 
   return (
     <div className={styles.container}>
@@ -30,14 +38,11 @@ export default function Home() {
           {loading && <p>Leyendo los datos....</p>}
           {!loading && <p>Datos leídos</p>}
         </p>
-
         <div className={styles.grid}>
-          {!loading &&
-            data.getAll.map((row) => (
-              <div key={row._id}>
-                <p>{row.mueble}</p>
-              </div>
-            ))}
+          <ul>
+            {!loading &&
+              data.getAll.map((row) => <li key={row._id}>{row.mueble}</li>)}
+          </ul>
         </div>
       </main>
 
