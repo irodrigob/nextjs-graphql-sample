@@ -1,9 +1,36 @@
 import { ApolloServer } from "apollo-server-micro";
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
+} from "apollo-server-core";
 import { typeDefs } from "graphql/schemas";
 import { resolvers } from "graphql/resolvers";
 import "db/config";
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+/*
+    process.env.NODE_ENV === "production"
+      ? ApolloServerPluginLandingPageProductionDefault({
+          graphRef: "my-graph-id@my-graph-variant",
+          footer: false,
+        })
+      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+*/
+
+if (process.env.ENVIRONMENT === "production") console.log("production");
+else console.log("development");
+
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [
+    process.env.ENVIRONMENT === "production"
+      ? ApolloServerPluginLandingPageProductionDefault({
+          graphRef: "my-graph-id@my-graph-variant",
+          footer: false,
+        })
+      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+  ],
+});
 
 const startServer = apolloServer.start();
 
