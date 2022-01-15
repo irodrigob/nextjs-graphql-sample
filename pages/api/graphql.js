@@ -7,18 +7,6 @@ import { typeDefs } from "graphql/schemas";
 import { resolvers } from "graphql/resolvers";
 import "db/config";
 
-/*
-    process.env.NODE_ENV === "production"
-      ? ApolloServerPluginLandingPageProductionDefault({
-          graphRef: "my-graph-id@my-graph-variant",
-          footer: false,
-        })
-      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
-*/
-
-if (process.env.ENVIRONMENT === "production") console.log("production");
-else console.log("development");
-
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
