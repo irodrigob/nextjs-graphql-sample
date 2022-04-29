@@ -3,13 +3,14 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from "apollo-server-core";
-import { typeDefs } from "graphql/schemas";
-import { resolvers } from "graphql/resolvers";
+
+import { typeDefsSAPGeneral } from "graphql/schemas/sapGeneral";
+import { sapGeneralResolvers } from "graphql/resolvers/sapGeneral";
 import "db/config";
 
 const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [typeDefsSAPGeneral],
+  resolvers: [sapGeneralResolvers],
   plugins: [
     process.env.ENVIRONMENT === "production"
       ? ApolloServerPluginLandingPageProductionDefault({

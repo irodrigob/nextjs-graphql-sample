@@ -1,8 +1,9 @@
 import { makeExecutableSchema } from "graphql-tools";
-import { typeDefs } from "graphql/schemas";
-import { resolvers } from "graphql/resolvers";
+
+import { typeDefsSAPGeneral } from "graphql/schemas/sapGeneral";
+import { sapGeneralResolvers } from "graphql/resolvers/sapGeneral";
 
 export const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
+  typeDefs: [typeDefsSAPGeneral],
+  resolvers: [sapGeneralResolvers],
 });

@@ -1,27 +1,41 @@
+import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useLazyQuery } from "@apollo/client";
 import styles from "../styles/Home.module.css";
 
-const QUERY = gql`
-  query Query {
-    getAll {
-      _id
-      mueble
-      material
+export const QUERY_METADATA = gql`
+  query Query($system: String!, $sap_user: String!, $sap_password: String!) {
+    getMetadata(
+      system: $system
+      sap_user: $sap_user
+      sap_password: $sap_password
+    ) {
+      content
     }
   }
 `;
+
 export default function Home() {
-  const { data, loading, error } = useQuery(gql`
-    query Query {
-      getAll {
-        _id
-        mueble
-        material
-      }
-    }
-  `);
+  /* const { data, loading, error } = useQuery(QUERY_METADATA, {
+    variables: {
+      system:
+        "http://vhcalnplci.dummy.nodomain:8000/sap/opu/odata/sap/ZSAP_TOOLS_CORE_SRV/",
+      sap_user: "developer",
+      sap_password: "Manolete",
+    },
+  });*/
+  const [resultado, setResultado] = useState("");
+
+  const [getMetadata, { loading, data }] = useLazyQuery(QUERY_METADATA, {
+    onError: (error) => {
+      console.log("erroor");
+    },
+    onCompleted: (data) => {
+      setResultado(data.getMetadata.content);
+      console.log("completed");
+    },
+  });
 
   return (
     <div className={styles.container}>
@@ -33,17 +47,25 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Pruebas de GraphQL</h1>
-
+        <button
+          onClick={() => {
+            getMetadata({
+              variables: {
+                system:
+                  "http://vhcalnplci.dummy.nodomain:8000/sap/opu/odata/sap/ZSAP_TOOLS_CORE_SRV/",
+                sap_user: "",
+                sap_password: "",
+              },
+            });
+          }}
+        >
+          Leer
+        </button>
         <p className={styles.description}>
           {loading && <p>Leyendo los datos....</p>}
           {!loading && <p>Datos leídos</p>}
         </p>
-        <div className={styles.grid}>
-          <ul>
-            {!loading &&
-              data.getAll.map((row) => <li key={row._id}>{row.mueble}</li>)}
-          </ul>
-        </div>
+        <div className={styles.grid}>{!loading && resultado}</div>
       </main>
 
       <footer className={styles.footer}>
